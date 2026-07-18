@@ -36,7 +36,7 @@ export default function MeetingDetail({ meeting }: MeetingDetailProps) {
             <span className="font-semibold text-right">No. {meeting.openingHymn.number} - {meeting.openingHymn.title}</span>
           </div>
           <div className="flex justify-between text-slate-700">
-            <span>Invocation</span>
+            <span>Opening Prayer</span>
             <span className="font-semibold text-right">{meeting.openingPrayer}</span>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function MeetingDetail({ meeting }: MeetingDetailProps) {
             <span className="font-semibold text-right">No. {meeting.closingHymn.number} - {meeting.closingHymn.title}</span>
           </div>
           <div className="flex justify-between text-slate-700">
-            <span>Benediction</span>
+            <span>Closing Prayer</span>
             <span className="font-semibold text-right">{meeting.closingPrayer}</span>
           </div>
         </div>
