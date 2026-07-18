@@ -32,7 +32,7 @@ export default function Home() {
         <div className="flex-1 relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg border border-slate-100">
           {/* Usamos Next Image como se requiere */}
           <Image
-            src="https://images.unsplash.com/photo-1438032005730-c779502df39b?auto=format&fit=crop&q=80&w=800"
+            src="https://content.churchofjesuschrist.org/templesldsorg/bc/Temples/photo-galleries/accra-ghana/800x450/accra-ghana-temple-detail-249022-2400x1200.jpg"
             alt="Beautiful church interior chapel"
             fill
             className="object-cover"
