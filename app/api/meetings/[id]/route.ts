@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getMeetingById } from '@/lib/meetings-db';
 
-// También en la API el "params" es una Promesa en Next.js 16
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -13,7 +12,8 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid ID format.' }, { status: 400 });
   }
 
-  const meeting = getMeetingById(idNumber);
+  // Agregamos await acá
+  const meeting = await getMeetingById(idNumber);
 
   if (!meeting) {
     return NextResponse.json({ error: 'Meeting not found.' }, { status: 404 });
