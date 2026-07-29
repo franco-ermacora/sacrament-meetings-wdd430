@@ -1,32 +1,41 @@
 'use client';
 
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export function MeetingSearch() {
+interface MeetingSearchProps {
+  placeholder?: string;
+}
+
+export function MeetingSearch({ placeholder = 'Search...' }: MeetingSearchProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((term: string) => {
+  function handleSearch(term: string) {
     const params = new URLSearchParams(searchParams);
-    params.set('page', '1'); // Resetea a la página 1 en cada búsqueda nueva
+    params.set('page', '1');
+
     if (term) {
       params.set('query', term);
     } else {
       params.delete('query');
     }
+
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  }
 
   return (
-    <input
-      type="search"
-      placeholder="Search by speaker, leader, or meeting type..."
-      defaultValue={searchParams.get('query')?.toString()}
-      onChange={(e) => handleSearch(e.target.value)}
-      aria-label="Search meetings"
-      className="w-full p-2 border border-gray-300 rounded-md mb-4 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
-    />
+    <div className="relative flex flex-1 flex-shrink-0">
+      <label htmlFor="search" className="sr-only">
+        Search
+      </label>
+      <input
+        id="search"
+        className="peer block w-full rounded-md border border-slate-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-slate-500"
+        placeholder={placeholder}
+        onChange={(e) => handleSearch(e.target.value)}
+        defaultValue={searchParams.get('query')?.toString()}
+      />
+    </div>
   );
 }

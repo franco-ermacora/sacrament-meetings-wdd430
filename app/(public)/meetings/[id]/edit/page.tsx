@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getMeetingById } from '@/lib/meetings-db';
-import MeetingDetail from '@/components/MeetingDetail';
+import MeetingForm from '@/components/MeetingForm';
 
-export default async function MeetingDetailPage({
+export default async function EditMeetingPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -10,14 +10,19 @@ export default async function MeetingDetailPage({
   const { id } = await params;
   const meetingId = parseInt(id, 10);
 
-  if (isNaN(meetingId)) notFound();
+  if (isNaN(meetingId)) {
+    notFound();
+  }
 
   const meeting = await getMeetingById(meetingId);
-  if (!meeting) notFound();
+
+  if (!meeting) {
+    notFound();
+  }
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-8">
-      <MeetingDetail meeting={meeting} />
+    <main className="max-w-4xl mx-auto px-4 py-8">
+      <MeetingForm meeting={meeting} />
     </main>
   );
 }

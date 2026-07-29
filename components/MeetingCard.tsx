@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SacramentMeeting } from '@/lib/types';
+import DeleteMeetingButton from '@/components/DeleteMeetingButton';
 
 interface MeetingCardProps {
   meeting: SacramentMeeting;
@@ -26,12 +27,23 @@ export default function MeetingCard({ meeting }: MeetingCardProps) {
         <p className="text-sm text-slate-600 mb-1"><strong>Presiding:</strong> {meeting.presiding}</p>
         <p className="text-sm text-slate-600"><strong>Opening Hymn:</strong> No. {meeting.openingHymn.number} - {meeting.openingHymn.title}</p>
       </div>
-      <Link
-        href={`/meetings/${meeting.id}`}
-        className="mt-6 inline-block text-center bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium py-2 rounded-lg transition"
-      >
-        View Program
-      </Link>
+
+      {/* Botones de acción: View, Edit y Delete */}
+      <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
+        <Link
+          href={`/meetings/${meeting.id}`}
+          className="flex-1 text-center bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium py-2 px-3 rounded-lg transition"
+        >
+          View Program
+        </Link>
+        <Link
+          href={`/meetings/${meeting.id}/edit`}
+          className="text-center bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-sm font-medium py-2 px-3 rounded-lg transition"
+        >
+          Edit
+        </Link>
+        <DeleteMeetingButton id={meeting.id} />
+      </div>
     </div>
   );
 }

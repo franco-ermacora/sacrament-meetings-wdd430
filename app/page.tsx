@@ -25,19 +25,20 @@ export default function Home() {
               href="/meetings/current"
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition"
             >
-              This Week's Program
+              This Week&apos;s Program
             </Link>
           </div>
         </div>
         <div className="flex-1 relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg border border-slate-100">
           {/* Usamos Next Image como se requiere */}
           <Image
-            src="https://content.churchofjesuschrist.org/templesldsorg/bc/Temples/photo-galleries/accra-ghana/800x450/accra-ghana-temple-detail-249022-2400x1200.jpg"
-            alt="Beautiful church interior chapel"
-            fill
-            className="object-cover"
-            priority
-          />
+              src="https://content.churchofjesuschrist.org/templesldsorg/bc/Temples/photo-galleries/accra-ghana/800x450/accra-ghana-temple-detail-249022-2400x1200.jpg"
+              alt="Beautiful church interior chapel"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
         </div>
       </div>
     </main>
