@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { auth } from '@clerk/nextjs/server';
+import { UserButton, SignInButton } from '@clerk/nextjs';
 import { getMeetings, getMeetingsTotalPages } from '@/lib/meetings-db';
 import { MeetingSearch } from '@/components/MeetingSearch';
 import MeetingCard from '@/components/MeetingCard';
@@ -7,6 +9,7 @@ import { Pagination } from '@/components/Pagination';
 export default async function MeetingsPage(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;
 }) {
+  const { userId } = await auth(); // Verificamos si hay usuario en sesión
   const searchParams = await props.searchParams;
   const query = searchParams?.query ?? '';
   const currentPage = Number(searchParams?.page) || 1;
@@ -24,12 +27,24 @@ export default async function MeetingsPage(props: {
         <div className="flex-1">
           <MeetingSearch />
         </div>
-        <Link
-          href="/meetings/new"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg text-center transition-colors flex items-center justify-center shrink-0"
-        >
-          + Create Meeting
-        </Link>
+
+        {userId ? (
+          <div className="flex items-center gap-3">
+            <Link
+              href="/meetings/new"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg text-center transition-colors flex items-center justify-center shrink-0"
+            >
+              + Create Meeting
+            </Link>
+            <UserButton />
+          </div>
+        ) : (
+          <SignInButton mode="modal">
+            <button className="bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors shrink-0">
+              Inicia sesión (Obispado)
+            </button>
+          </SignInButton>
+        )}
       </div>
 
       {meetings.length === 0 ? (

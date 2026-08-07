@@ -1,23 +1,31 @@
 import Link from 'next/link';
+import { auth } from '@clerk/nextjs/server';
+import { UserButton, SignInButton } from '@clerk/nextjs';
 
-export default function Header() {
-  const today = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+export default async function Header() {
+  const { userId } = await auth();
 
   return (
-    <header className="bg-slate-900 text-white py-6 px-8 shadow-md flex justify-between items-center">
-      <div>
-        <Link href="/" className="text-2xl font-bold tracking-tight hover:text-slate-300 transition">
-          ⛪ Rexburg 3rd Ward
-        </Link>
-        <p className="text-xs text-slate-400 mt-1">Sacrament Meeting Planner</p>
-      </div>
-      <div className="text-sm font-medium bg-slate-800 py-1.5 px-3 rounded-lg border border-slate-700">
-        📅 {today}
+    <header className="bg-slate-900 text-white py-4 px-6 flex items-center justify-between shadow-md">
+      <Link href="/" className="flex items-center gap-2 font-bold text-xl">
+        <span>🏛️</span> Rexburg 3rd Ward
+      </Link>
+
+      <div className="flex items-center gap-4">
+        {userId ? (
+          <div className="flex items-center gap-3">
+            <span className="text-xs bg-blue-900 text-blue-200 px-2 py-1 rounded">
+              Obispado
+            </span>
+            <UserButton />
+          </div>
+        ) : (
+          <SignInButton mode="modal">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-3 py-1.5 rounded-lg transition-colors">
+              Inicia sesión
+            </button>
+          </SignInButton>
+        )}
       </div>
     </header>
   );
